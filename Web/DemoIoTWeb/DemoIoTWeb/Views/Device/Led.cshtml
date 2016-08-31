@@ -1,0 +1,56 @@
+﻿@model DemoIoTWeb.ViewModel.DeviceLedVM
+@{
+    ViewBag.Title = "Led";
+}
+<div class="row">
+    <div class="col-md-12">
+
+        @using (Html.BeginForm())
+        {
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Controle o LED</h3>
+                </div>
+
+                <!--Horizontal Form-->
+                <!--===================================================-->
+                <form class="form-horizontal">
+                    @Html.AntiForgeryToken()
+                    <div class="panel-body">
+                        <div class="form-group">
+                            @Html.ValidationSummary()
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Red, new { @class = "col-sm-3 control-label" })
+                            @Html.TextBoxFor(m => m.Red, new { @class = "form-control" })
+                            <span id="helpBlock2" class="help-block">
+                                @Html.ValidationMessageFor(m => m.Red)
+                            </span>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Green, new { @class = "col-sm-3 control-label" })
+                            @Html.TextBoxFor(m => m.Green, new { @class = "form-control" })
+                            <span id="helpBlock2" class="help-block">
+                                @Html.ValidationMessageFor(m => m.Green)
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Blue, new { @class = "col-sm-3 control-label" })
+                            @Html.TextBoxFor(m => m.Blue, new { @class = "form-control" })
+                            <span id="helpBlock2" class="help-block">
+                                @Html.ValidationMessageFor(m => m.Blue)
+                            </span>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-right">
+                        @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-active-default" })
+                        <button class="btn btn-info" type="submit">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</div>
+
+

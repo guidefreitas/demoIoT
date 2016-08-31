@@ -1,0 +1,40 @@
+﻿@model List<DemoIoTWeb.Models.Device>
+@{
+    ViewBag.Title = "Home Page";
+
+}
+
+<div class="jumbotron">
+    <h1>Demo IoT</h1>
+    <p class="lead">Dispositivos cadastrados</p>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Descrição</td>
+                    <td>Num. Serial</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var device in Model)
+                {
+                    <tr>
+                        <td>@device.Id</td>
+                        <td>@device.Description</td>
+                        <td>@device.SerialNumber</td>
+                        <td>
+                            @Html.ActionLink("Ver detalhes", "Detail", new { controller = "Device", id = @device.Id }, new { @class = "btn btn-success"})
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+   
+</div>

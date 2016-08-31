@@ -1,0 +1,62 @@
+﻿@model DemoIoTWeb.Models.Device
+@{
+    ViewBag.Title = "Detail";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Detalhes do dispositivo @Model.Id</h2>
+        <p>@Model.Description</p>
+        <h3>Atualizações</h3>
+
+        <canvas id="chart" width="400" height="200"></canvas>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Data</td>
+                    <td>Valor</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var update in Model.Updates.OrderByDescending(m => m.Id).Take(20))
+                {
+                    <tr>
+                        <td>@update.Id</td>
+                        <td>@update.DateTime.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                        <td>@update.Value</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts{ 
+    <script>
+        var ctx = document.getElementById("chart");
+        var myLineChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: @MvcHtmlString.Create(@ViewBag.ChartLabels),
+                datasets: [{
+                    label: 'Valor',
+                    data: @MvcHtmlString.Create(@ViewBag.ChartData),
+                    backgroundColor: 'rgba(0, 0, 255, 0.5)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+    </script>
+}
