@@ -1,10 +1,6 @@
 ### Description ###
 
-Demo project using ASP.NET MVC, MQTT Broker (GnatMQ) and ESP8266 with Arduino IDE
-
-The full solution is composed of a ASPNET MVC application integrated with a MQTT Broker that starts with the MVC.
-
-MQTT Broker port is 1883.
+Demo project using ASP.NET MVC and ESP8266 with Arduino IDE
 
 Applicaiton uses Entity Framework 6.3 for database access.
 
@@ -17,8 +13,6 @@ Arduino IDE [http://arduino.cc/](http://arduino.cc/)
 #### Arduino Libraries Used ####
 
 ESP8266Wifi - [https://github.com/ekstrand/ESP8266wifi](https://github.com/ekstrand/ESP8266wifi)
-
-PubSubClient - [https://github.com/knolleary/pubsubclient](https://github.com/knolleary/pubsubclient)
 
 #### Create database ####
 
