@@ -88,10 +88,11 @@ namespace DemoIoTWeb.Areas.Api.Controllers
                         Id = device.Id,
                         Description = device.Description,
                         SerialNumber = device.SerialNumber,
-                        UserId = device.User.Id,
-                        Updates = new List<Object>()
+                        UserId = device.User.Id
+                        /*Updates = new List<Object>()*/
                     };
 
+                    /*
                     foreach(var update in device.Updates.OrderByDescending(m => m.DateTime))
                     {
                         var jsonUpdate = new
@@ -103,12 +104,20 @@ namespace DemoIoTWeb.Areas.Api.Controllers
 
                         jsonDevice.Updates.Add(jsonUpdate);
                     }
+                    */
 
                     jsonDevices.Add(jsonDevice);
+                    
 
                 }
 
-                return Json(jsonDevices, JsonRequestBehavior.AllowGet);
+                var jsonData = new
+                {
+                    Count = devices.Count(),
+                    Data = jsonDevices
+                };
+
+                return Json(jsonData, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
