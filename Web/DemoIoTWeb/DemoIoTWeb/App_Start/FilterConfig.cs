@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using DemoIoTWeb.Filters;
+using System.Web;
 using System.Web.Mvc;
 
 namespace DemoIoTWeb
@@ -8,6 +9,7 @@ namespace DemoIoTWeb
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new UserInfoFilter());
         }
     }
 }

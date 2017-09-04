@@ -9,12 +9,15 @@ namespace DemoIoTWeb.Models
 {
     public class DemoIoTContext : DbContext
     {
-        public DemoIoTContext()
+        public DemoIoTContext() : base("DefaultConnection")
         {
             Database.SetInitializer<DemoIoTContext>(new DropCreateDatabaseIfModelChanges<DemoIoTContext>());
         }
+
+        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Device> Devices { get; set; }
         public virtual DbSet<DeviceUpdate> DeviceUpdates { get; set; }
+        
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

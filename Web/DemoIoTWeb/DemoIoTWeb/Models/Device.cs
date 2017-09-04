@@ -8,6 +8,11 @@ namespace DemoIoTWeb.Models
 {
     public class Device
     {
+        public Device()
+        {
+            this.Updates = new List<DeviceUpdate>();
+        }
+
         public long Id { get; set; }
 
         [Required]
@@ -15,6 +20,8 @@ namespace DemoIoTWeb.Models
 
         [Required]
         public String Description { get; set; }
+
+        public virtual User User { get; set; }
 
         public virtual ICollection<DeviceUpdate> Updates { get; set; }
 

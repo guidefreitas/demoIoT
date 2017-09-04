@@ -1,5 +1,4 @@
-﻿using Charlotte;
-using DemoIoTWeb.Models;
+﻿using DemoIoTWeb.Models;
 using DemoIoTWeb.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -56,10 +55,12 @@ namespace DemoIoTWeb.Controllers
         [HttpPost]
         public ActionResult Led(DeviceLedVM vm)
         {
+            /*
             MQTTConnection conn = new MQTTConnection(MQTTServer.MQTT_HOST, MQTTServer.MQTT_PORT, MQTTServer.MQTT_USER, MQTTServer.MQTT_PASS);
             conn.Connect();
             var msg = vm.Red + "|" + vm.Green + "|" + vm.Blue;
             conn.Publish("sensor/rgb", msg);
+            */
             return View(vm);
         }
     }

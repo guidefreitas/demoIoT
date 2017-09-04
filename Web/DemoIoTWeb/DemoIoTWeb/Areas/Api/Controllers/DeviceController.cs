@@ -16,7 +16,7 @@ namespace DemoIoTWeb.Areas.Api.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return GetAll();
         }
 
         [HttpGet]
@@ -75,6 +75,8 @@ namespace DemoIoTWeb.Areas.Api.Controllers
             try
             {
                 var devices = db.Devices
+                                .Include(m => m.User)
+                                .Include(m => m.Updates)
                                 .OrderBy(m => m.Id)
                                 .ToList();
 
@@ -86,10 +88,11 @@ namespace DemoIoTWeb.Areas.Api.Controllers
                         Id = device.Id,
                         Description = device.Description,
                         SerialNumber = device.SerialNumber,
+                        UserId = device.User.Id,
                         Updates = new List<Object>()
                     };
 
-                    foreach(var update in device.Updates)
+                    foreach(var update in device.Updates.OrderByDescending(m => m.DateTime))
                     {
                         var jsonUpdate = new
                         {
@@ -173,9 +176,11 @@ namespace DemoIoTWeb.Areas.Api.Controllers
                 Newtonsoft.Json.Linq.JObject token = JObject.Parse(jsonData);
                 var deviceSerialNumber = (string)token.SelectToken("SerialNumber");
                 var deviceDescription = (string)token.SelectToken("Description");
+                var userIdString = (string)token.SelectToken("UserId");
                 Device device = new Device();
                 device.SerialNumber = deviceSerialNumber;
                 device.Description = deviceDescription;
+                device.User = db.Users.Where(m => m.Id == Convert.ToInt64(userIdString)).FirstOrDefault();
                 db.Devices.Add(device);
                 db.SaveChanges();
                 return Json(

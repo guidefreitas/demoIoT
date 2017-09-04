@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,24 +49,12 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Charlotte, Version=0.1.50.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Charlotte.0.1.50\lib\Charlotte.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="GnatMQ.Net, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GnatMQ.1.1.0.0\lib\net45\GnatMQ.Net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="M2Mqtt, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\M2Mqtt.3.6\lib\net45\M2Mqtt.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -141,20 +130,30 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\DeviceController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Areas\Admin\ViewModel\VMDevice.cs" />
+    <Compile Include="Areas\Admin\ViewModel\VMUser.cs" />
     <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
     <Compile Include="Areas\Api\Controllers\DeviceController.cs" />
+    <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\DeviceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Exceptions\ValidationException.cs" />
+    <Compile Include="Filters\AuthorizationFilter.cs" />
+    <Compile Include="Filters\UserInfoFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FlashHelpers.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DemoIoTContext.cs" />
     <Compile Include="Models\Device.cs" />
     <Compile Include="Models\DeviceUpdate.cs" />
-    <Compile Include="MQTTServer.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\DeviceLedVM.cs" />
+    <Compile Include="ViewModel\VMLogin.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -178,6 +177,16 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Areas\Admin\Views\Device\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Device\_Form.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\User\_Form.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Device\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Device\Detail.cshtml" />
+    <None Include="Properties\PublishProfiles\demoiotsociesc - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\demoiotsociesc - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -211,6 +220,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Device\Detail.cshtml" />
     <Content Include="Views\Device\Led.cshtml" />
+    <Content Include="Views\Authentication\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -219,7 +229,6 @@
     <Folder Include="Areas\Api\ViewModel\" />
     <Folder Include="Areas\Api\Views\Device\" />
     <Folder Include="Areas\Api\Views\Shared\" />
-    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

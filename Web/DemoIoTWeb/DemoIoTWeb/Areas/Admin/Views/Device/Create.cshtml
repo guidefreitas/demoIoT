@@ -1,0 +1,16 @@
+﻿@model DemoIoTWeb.Areas.Admin.ViewModel.VMDevice
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>New Device</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.Partial("_Form", Model)
+        }
+    </div>
+</div>
+

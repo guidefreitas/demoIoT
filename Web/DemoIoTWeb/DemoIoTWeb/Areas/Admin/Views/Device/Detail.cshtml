@@ -1,0 +1,55 @@
+﻿@model DemoIoTWeb.Models.Device
+@using DemoIoTWeb.Models
+@using DemoIoTWeb.Helpers
+
+@{
+    ViewBag.Title = "Device";
+}
+
+<h2>Devices</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        @Html.Flash()
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @Html.ActionLink("Edit", "Edit", new { controller = "Device", id = Model.Id }, new { @class = "btn btn-success btn-sm" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @if (Model.Updates.Count == 0)
+        {
+            <p>Nenhum update para este dispositivo</p>
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td>Id</td>
+                        <td>Data</td>
+                        <td>Valor</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DeviceUpdate update in Model.Updates.OrderByDescending(m => m.DateTime))
+                    {
+                        <tr>
+                            <td>@update.Id</td>
+                            <td>@update.DateTime.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@update.Value</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+
+

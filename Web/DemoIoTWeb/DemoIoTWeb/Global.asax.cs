@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using uPLibrary.Networking.M2Mqtt;
 
 namespace DemoIoTWeb
 {
@@ -17,9 +16,6 @@ namespace DemoIoTWeb
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            MQTTServer mqttServer = new MQTTServer();
-            mqttServer.Start();
             
         }
     }

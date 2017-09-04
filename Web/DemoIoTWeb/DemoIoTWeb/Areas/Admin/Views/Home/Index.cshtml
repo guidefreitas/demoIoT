@@ -1,0 +1,21 @@
+﻿@using DemoIoTWeb.Models;
+@using DemoIoTWeb.Helpers;
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Devices</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        @Html.Flash()
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @Html.ActionLink("Users", "Index", new { area = "Admin", controller = "User" }, new { @class = "btn btn-success btn-sm" })
+        @Html.ActionLink("Devices", "Index", new { area = "Admin", controller = "Device" }, new { @class = "btn btn-success btn-sm" })
+    </div>
+</div>
