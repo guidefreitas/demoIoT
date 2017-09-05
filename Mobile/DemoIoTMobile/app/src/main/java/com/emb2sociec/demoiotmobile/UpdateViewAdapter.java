@@ -8,7 +8,10 @@ import android.widget.TextView;
 
 import com.emb2sociec.demoiotmobile.UpdateFragment.OnListFragmentInteractionListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link UpdateItem} and makes a call to the
@@ -34,8 +37,9 @@ public class UpdateViewAdapter extends RecyclerView.Adapter<UpdateViewAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH);
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
+        holder.mIdView.setText(df.format(mValues.get(position).date));
         holder.mContentView.setText(mValues.get(position).value);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
