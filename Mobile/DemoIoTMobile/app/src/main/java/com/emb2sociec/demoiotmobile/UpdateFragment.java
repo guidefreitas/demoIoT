@@ -3,6 +3,7 @@ package com.emb2sociec.demoiotmobile;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,7 +17,11 @@ import com.android.volley.VolleyError;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * A fragment representing a list of Items.
@@ -24,19 +29,25 @@ import java.util.ArrayList;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class DeviceFragment extends Fragment {
+public class UpdateFragment extends Fragment {
 
+    RecyclerView recyclerView;
+    private UpdateViewAdapter adapter;
+    String deviceId;
     private OnListFragmentInteractionListener mListener;
-    private DeviceViewAdapter adapter;
-    private RecyclerView recyclerView;
 
-    public DeviceFragment() {
+    /**
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
+     */
+    public UpdateFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static DeviceFragment newInstance(int columnCount) {
-        DeviceFragment fragment = new DeviceFragment();
+    public static UpdateFragment newInstance(String deviceId) {
+        UpdateFragment fragment = new UpdateFragment();
+        Bundle args = new Bundle();
+        args.putString("deviceId", deviceId);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -48,7 +59,12 @@ public class DeviceFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_device_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_update_list, container, false);
+
+        Bundle args = getArguments();
+        deviceId = args.getString("deviceId");
+
+        getActivity().setTitle("Device " + deviceId);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -56,21 +72,24 @@ public class DeviceFragment extends Fragment {
             recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-            APIManager.getInstance().getDevices(new Response.Listener<JSONObject>() {
+            APIManager.getInstance().getDeviceUpdates(deviceId, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     try{
-                        ArrayList<DeviceItem> items = new ArrayList<DeviceItem>();
-                        JSONArray data = response.getJSONArray("Data");
+                        Log.i("Response", response.toString());
+                        ArrayList<UpdateItem> items = new ArrayList<UpdateItem>();
+                        JSONArray data = response.getJSONArray("Updates");
                         for(int i=0;i<data.length();i++){
                             JSONObject obj = data.getJSONObject(i);
-                            String description = obj.getString("Description");
+                            String value = obj.getString("Value");
                             String devId = obj.getString("Id");
-                            String serialNumber = obj.getString("SerialNumber");
-                            DeviceItem devItem = new DeviceItem(devId, description, serialNumber);
-                            items.add(devItem);
+                            String dateTimeString = obj.getString("DateTime");
+                            DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH);
+                            Date dateTime =  df.parse(dateTimeString);
+                            UpdateItem updateItem = new UpdateItem(devId, dateTime, value);
+                            items.add(updateItem);
                         }
-                        adapter = new DeviceViewAdapter(items, mListener);
+                        adapter = new UpdateViewAdapter(items, mListener);
                         recyclerView.setAdapter(adapter);
                     }catch(Exception ex){
                         Log.e("DeviceFragment", "Error loading data");
@@ -97,9 +116,6 @@ public class DeviceFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
         }
-
-        //adapter = new DeviceViewAdapter(DummyContent.ITEMS, mListener);
-        //recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -108,8 +124,18 @@ public class DeviceFragment extends Fragment {
         mListener = null;
     }
 
-
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
     public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(DeviceItem item);
+        // TODO: Update argument type and name
+        void onListFragmentInteraction(UpdateItem item);
     }
 }

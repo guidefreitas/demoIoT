@@ -18,6 +18,7 @@ import org.json.JSONObject;
 public final class APIManager {
     private static APIManager instance;
     String deviceUrl = "http://demoiotsociesc.azurewebsites.net/api/device";
+    String deviceUpdatesUrl = "http://demoiotsociesc.azurewebsites.net/api/device/getdevice/";
 
     RequestQueue queue = Volley.newRequestQueue(DemoApplication.getAppContext());
 
@@ -33,6 +34,13 @@ public final class APIManager {
     public void getDevices(Response.Listener<JSONObject> response, Response.ErrorListener errorListener){
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, deviceUrl, null, response, errorListener);
+        queue.add(jsObjRequest);
+    }
+
+    public void getDeviceUpdates(String deviceSerialNumber, Response.Listener<JSONObject> response, Response.ErrorListener errorListener){
+        String url = deviceUpdatesUrl + deviceSerialNumber;
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, response, errorListener);
         queue.add(jsObjRequest);
     }
 }

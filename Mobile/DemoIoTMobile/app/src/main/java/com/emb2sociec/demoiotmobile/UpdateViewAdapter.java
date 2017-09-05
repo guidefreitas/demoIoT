@@ -6,21 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.emb2sociec.demoiotmobile.DeviceFragment.OnListFragmentInteractionListener;
+import com.emb2sociec.demoiotmobile.UpdateFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DeviceItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link UpdateItem} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class DeviceViewAdapter extends RecyclerView.Adapter<DeviceViewAdapter.ViewHolder> {
+public class UpdateViewAdapter extends RecyclerView.Adapter<UpdateViewAdapter.ViewHolder> {
 
-    private final List<DeviceItem> mValues;
+    private final List<UpdateItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public DeviceViewAdapter(List<DeviceItem> items, OnListFragmentInteractionListener listener) {
+    public UpdateViewAdapter(List<UpdateItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -28,7 +28,7 @@ public class DeviceViewAdapter extends RecyclerView.Adapter<DeviceViewAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_device, parent, false);
+                .inflate(R.layout.fragment_update, parent, false);
         return new ViewHolder(view);
     }
 
@@ -36,7 +36,7 @@ public class DeviceViewAdapter extends RecyclerView.Adapter<DeviceViewAdapter.Vi
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).description);
+        holder.mContentView.setText(mValues.get(position).value);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +59,7 @@ public class DeviceViewAdapter extends RecyclerView.Adapter<DeviceViewAdapter.Vi
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DeviceItem mItem;
+        public UpdateItem mItem;
 
         public ViewHolder(View view) {
             super(view);
